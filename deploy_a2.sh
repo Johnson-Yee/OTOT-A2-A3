@@ -1,9 +1,3 @@
-echo "Starting Deployment"
-CLUSTER_NAME="kind-1"
-kind create cluster --name $CLUSTER_NAME --config k8s/kind/cluster-config.yaml
-echo "Cluster with name: $CLUSTER_NAME created"
-echo
-
 echo "View Cluster Information"
 kubectl cluster-info
 echo
@@ -26,7 +20,7 @@ echo "Create Nginx Ingress Controller"
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 echo
 
-sleep 70
+sleep 180
 
 echo "Check Ingress Controller"
 kubectl -n ingress-nginx get deploy
@@ -36,7 +30,7 @@ echo "Apply Service.yaml Manifest"
 kubectl apply -f ./k8s/manifests/service.yaml
 echo
 
-sleep 70
+sleep 5
 
 echo "Check Service Manifest"
 kubectl get svc
@@ -48,7 +42,7 @@ kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
 kubectl apply -f ./k8s/manifests/ingress.yaml
 echo
 
-sleep 70
+sleep 10
 
 echo "Check ingress Manifest"
 kubectl get ingress
